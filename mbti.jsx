@@ -43,7 +43,8 @@ import {
     "'Pretendard', 'Apple SD Gothic Neo', 'Noto Sans KR', system-ui, sans-serif";
   const LUXE_EASE = "cubic-bezier(0.22, 1, 0.36, 1)";
   // Imweb header overlap offset (landing/test embedded in Imweb page)
-  const IMWEB_HEADER_OFFSET_PX = 84;
+  // Keep content starting comfortably below the Imweb header across viewports.
+  const IMWEB_TOP_PADDING = "clamp(40px, 6vh, 60px)";
 
   // Parisian editorial system (text + hairlines). Keep background/buttons unchanged.
   const PARIS = {
@@ -982,18 +983,6 @@ import {
         {/* Center copy */}
         <div className="flex-1 w-full flex items-center justify-center">
           <div className="w-full flex flex-col items-center text-center">
-            <img
-              src="/images/symbol_icon_350_350.png"
-              alt=""
-              aria-hidden="true"
-              style={{
-                width: "96px",
-                height: "96px",
-                objectFit: "contain",
-                marginBottom: "14px",
-                ...fadeUp(120),
-              }}
-            />
             <div style={{ color: BRAND.ink, marginBottom: "8px" }}>
               <div
                 style={{
@@ -2562,7 +2551,7 @@ import {
               `url(/images/background_intro.png) center / cover no-repeat`,
             fontFamily: FONT_SANS,
             color: BRAND.ink,
-            paddingTop: `${IMWEB_HEADER_OFFSET_PX}px`,
+            paddingTop: IMWEB_TOP_PADDING,
           }}
         >
           {phase !== "landing" && <SandRipple ref={rippleRef} />}
