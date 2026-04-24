@@ -982,35 +982,18 @@ import {
         {/* Center copy */}
         <div className="flex-1 w-full flex items-center justify-center">
           <div className="w-full flex flex-col items-center text-center">
-            <div
+            <img
+              src="/images/symbol_icon_350_350.png"
+              alt=""
               aria-hidden="true"
               style={{
-                width: "84px",
-                height: "84px",
-                borderRadius: "999px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                background: "rgba(255, 255, 255, 0.42)",
-                border: "1px solid rgba(255, 255, 255, 0.55)",
-                backdropFilter: "blur(6px)",
-                WebkitBackdropFilter: "blur(6px)",
+                width: "96px",
+                height: "96px",
+                objectFit: "contain",
                 marginBottom: "14px",
                 ...fadeUp(120),
               }}
-            >
-              <img
-                src="/images/symbol_icon_350_350.png"
-                alt=""
-                aria-hidden="true"
-                style={{
-                  width: "64px",
-                  height: "64px",
-                  objectFit: "contain",
-                  filter: "drop-shadow(0 6px 14px rgba(0,0,0,0.22))",
-                }}
-              />
-            </div>
+            />
             <div style={{ color: BRAND.ink, marginBottom: "8px" }}>
               <div
                 style={{
