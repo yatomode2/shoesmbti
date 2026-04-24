@@ -42,6 +42,8 @@ import {
   const FONT_SANS =
     "'Pretendard', 'Apple SD Gothic Neo', 'Noto Sans KR', system-ui, sans-serif";
   const LUXE_EASE = "cubic-bezier(0.22, 1, 0.36, 1)";
+  // Imweb header overlap offset (landing/test embedded in Imweb page)
+  const IMWEB_HEADER_OFFSET_PX = 84;
 
   // Parisian editorial system (text + hairlines). Keep background/buttons unchanged.
   const PARIS = {
@@ -944,44 +946,7 @@ import {
   });
   
   // ---------------------------------------------------------------------------
-  // 6. Wordmark
-  // ---------------------------------------------------------------------------
-  function Wordmark({ phase }) {
-    const [mounted, setMounted] = useState(false);
-    useEffect(() => {
-      const id = requestAnimationFrame(() => setMounted(true));
-      return () => cancelAnimationFrame(id);
-    }, []);
-    const useSymbol = phase === "landing" || phase === "result";
-    const src = useSymbol
-      ? "/images/symbol_icon_350_350.png"
-      : "/images/logo%20icon_700_280.png";
-    return (
-      <header
-        className="relative z-10 pb-2 px-6"
-        style={{ paddingTop: useSymbol ? "0px" : "40px" }}
-      >
-        <div className="flex items-center justify-center">
-          <img
-            src={src}
-            alt="YATO"
-            style={{
-              width: useSymbol ? "96px" : "210px",
-              height: "auto",
-              marginTop: useSymbol ? "10px" : "0px",
-              opacity: mounted ? 1 : 0,
-              transform: mounted ? "translateY(0)" : "translateY(-6px)",
-              transition: `opacity 1200ms ${LUXE_EASE}, transform 1200ms ${LUXE_EASE}`,
-              imageRendering: "auto",
-            }}
-          />
-        </div>
-      </header>
-    );
-  }
-  
-  // ---------------------------------------------------------------------------
-  // 7. Landing hero
+  // 6. Landing hero
   // ---------------------------------------------------------------------------
   function LandingHero() {
     const { trackEvent } = useTracking();
@@ -1009,21 +974,50 @@ import {
       <main
         className="relative z-10 px-6 max-w-xl mx-auto flex flex-col items-center"
         style={{
-          minHeight: "calc(100vh - 80px)",
-          paddingTop: "24px",
+          minHeight: "100vh",
+          paddingTop: 0,
           paddingBottom: "68px",
         }}
       >
         {/* Center copy */}
         <div className="flex-1 w-full flex items-center justify-center">
           <div className="w-full flex flex-col items-center text-center">
+            <div
+              aria-hidden="true"
+              style={{
+                width: "84px",
+                height: "84px",
+                borderRadius: "999px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                background: "rgba(255, 255, 255, 0.42)",
+                border: "1px solid rgba(255, 255, 255, 0.55)",
+                backdropFilter: "blur(6px)",
+                WebkitBackdropFilter: "blur(6px)",
+                marginBottom: "14px",
+                ...fadeUp(120),
+              }}
+            >
+              <img
+                src="/images/symbol_icon_350_350.png"
+                alt=""
+                aria-hidden="true"
+                style={{
+                  width: "64px",
+                  height: "64px",
+                  objectFit: "contain",
+                  filter: "drop-shadow(0 6px 14px rgba(0,0,0,0.22))",
+                }}
+              />
+            </div>
             <div style={{ color: BRAND.ink, marginBottom: "8px" }}>
               <div
                 style={{
                   fontFamily: "'Jost', system-ui, sans-serif",
                   fontStyle: "normal",
                   fontWeight: 500,
-                  fontSize: "40px",
+                  fontSize: "36px",
                   letterSpacing: "0.03em",
                   textAlign: "center",
                   ...fadeUp(220),
@@ -2585,10 +2579,10 @@ import {
               `url(/images/background_intro.png) center / cover no-repeat`,
             fontFamily: FONT_SANS,
             color: BRAND.ink,
+            paddingTop: `${IMWEB_HEADER_OFFSET_PX}px`,
           }}
         >
           {phase !== "landing" && <SandRipple ref={rippleRef} />}
-          <Wordmark phase={phase} />
   
           {phase === "landing" && <LandingHero />}
           {phase === "intake" && <IntakeForm onSubmit={handleIntakeSubmit} />}
