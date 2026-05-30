@@ -178,11 +178,8 @@ import {
     "ARIN",
     "SYLVIE",
     "SOFIE",
-    "NOA",
     "JULIET",
     "BALLERINA",
-    "RINA",
-    "MARIA",
     "CATIE",
   ];
   
@@ -193,10 +190,7 @@ import {
     SOFIE: 0.09,
     SYLVIE: 0.08,
     SIENA: 0.07,
-    RINA: 0.06,
     JULIET: 0.05,
-    NOA: 0.04,
-    MARIA: 0.03,
     CATIE: 0.02,
     LENA: 0.01,
     BALLERINA: 0.0,
@@ -210,11 +204,8 @@ import {
     ARIN: "ARI",
     SYLVIE: "SYL",
     SOFIE: "SOF",
-    NOA: "NOA",
     JULIET: "JUL",
     BALLERINA: "BAL",
-    RINA: "RIN",
-    MARIA: "MAR",
     CATIE: "CAT",
   };
   const buildCouponCode = (charKey) =>
@@ -230,13 +221,9 @@ import {
     ARIN: "ARIN_BK_F_WG.jpg",
     SYLVIE: "Sylvie_LE_F_WG.jpg",
     SOFIE: "SOFIE_GR_F_WG.png",
-    NOA: "noas_BK_F_WG.png",
     JULIET: "JULLI_BK_F_WG.jpg",
     BALLERINA: "ballerina_BK_F_WG.jpg",
-    // user-requested override
-    RINA: "RINAh_BK_F_WG.png",
     CATIE: "CATIE_BK_F_WG.png",
-    MARIA: "Maria_GR_F_WG.png",
   };
 
   // ---------------------------------------------------------------------------
@@ -258,12 +245,9 @@ import {
     ARIN: [2, 3, 4, 5, 3, 2],
     SYLVIE: [4, 3, 1, 2, 1, 5],
     SOFIE: [1, 5, 1, 3, 2, 5],
-    NOA: [2, 4, 3, 2, 3, 4],
     JULIET: [1, 5, 2, 4, 3, 3],
     BALLERINA: [1, 4, 3, 3, 5, 3],
-    RINA: [3, 1, 5, 4, 4, 2],
     CATIE: [1, 2, 4, 5, 4, 2],
-    MARIA: [1, 1, 3, 5, 5, 2],
   };
 
   const DEFAULT_SILHOUETTE_PROFILE = [3, 3, 3, 3, 3, 3];
@@ -393,22 +377,6 @@ import {
         "형태를 잡아 고정하지 않은 Sofie의 유연함은, 삶을 하나의 시(詩)처럼 부드럽게 관조하는 당신의 태도를 닮았습니다. 강한 힘으로 세상을 압도하기보다, 있는 그대로의 흐름에 몸을 맡길 줄 아는 당신에게서 풍겨 나오는 은은한 우아함. 그 여유로운 서사를 슈즈의 부드러운 질감에 담았습니다.",
       shopUrl: "https://www.yatomode.com/shop/?idx=79",
     },
-    NOA: {
-      key: "NOA",
-      name: "NOA",
-      title: "The Young Lady",
-      tagline: "She looks gentle, but her spine is straight.",
-      summary: "소녀 같지만, 이미 단단하다.",
-      keywords: ["단아함", "소녀", "생동감", "선명함"],
-      diagnosis:
-        "당신은 여전히 소녀 같은 맑은 감성을 가지고 있지만, 동시에 자신이 무엇을 좋아하는지 선명하게 알아가고 있는 단계에 있습니다. 수줍음 뒤에 숨겨진 당당함, 그리고 일상의 사소한 즐거움을 발견하는 당신의 밝은 시선은 주변을 환하게 만듭니다. 완벽히 성숙하지 않아 더 아름다운, 지금 이 순간의 '나'를 가장 단아하고 생기 있게 긍정할 줄 아는 사람입니다.",
-      brandMessage:
-        "당신은 여전히 소녀 같지만, 이미 충분히 단단합니다. Noa의 선명한 실루엣은 당신의 가장 빛나는 시절을 함께 걷는 든든한 파트너가 될 것입니다.",
-      moment: "생동감 넘치는 에너지로, 새로운 시작을 준비하는 날.",
-      productDescription:
-        "Noa의 스퀘어 토와 메리제인 스트랩은 고전적인 단아함을 유지하면서도, 어디로든 가볍게 뛰어갈 것 같은 대학생의 생기 넘치는 에너지를 담고 있습니다. 정해진 틀에 갇히지 않고 자신만의 색깔을 덧입히는 통통 튀는 감각, 그리고 그 내면에 자리 잡기 시작한 기분 좋은 강인함을 상징합니다.",
-      shopUrl: "https://www.yatomode.com/shop/?idx=85",
-    },
     JULIET: {
       key: "JULIET",
       name: "JULIET",
@@ -440,39 +408,6 @@ import {
       productDescription:
         "클래식 플랫의 정석인 BALLERINA는 유행에 따라 변하는 화려한 장식보다, 발의 곡선을 가장 아름답게 보여주는 본연의 실루엣에 집중합니다. 가장 캐주얼하면서도 품격을 잃지 않는 이 슈즈는, 당신이 가진 본래의 여성성을 가장 자연스럽게 드러내 줍니다.",
       shopUrl: "https://www.yatomode.com/shop/?idx=70",
-    },
-    RINA: {
-      key: "RINA",
-      name: "RINA",
-      title: "The Minimalist",
-      tagline: "She edits ruthlessly. Nothing unnecessary survives.",
-      summary: "장식 없이, 선으로 말한다.",
-      keywords: ["격식", "중성적", "선", "구조"],
-      diagnosis:
-        "당신은 현재 자신의 삶을 명확한 구조 중심으로 정립해 나가는 단계에 있습니다. 복잡한 수식어나 타인의 평가보다 스스로가 정한 기준과 태도를 더 중요하게 생각합니다. 겉으로 드러나는 화려함보다 내면의 힘과 단단함을 선호하는 당신에게, 형태가 곧 태도가 되는 리나의 미학은 가장 닮아있는 자아의 모습입니다.",
-      brandMessage:
-        "RINA는 가장 명확한 실루엣로 당신의 기준을 드러냅니다. 장식에 의지하지 않는 구조가 당신의 태도를 가장 또렷하게 완성해 줄 것입니다.",
-      moment:
-        "감각적인 스타일은 물론, 활동적인 역할까지 완벽히 완수해야 하는 날.",
-      productDescription:
-        "플랫폼 굽을 가진 페니 로퍼 RINA는 중성적이면서도 힘 있는 실루엣을 제안합니다. 화려한 장식 대신 선명한 구조와 매끄러운 선에 집중한 디자인은, 당신의 확고한 취향과 태도를 대변합니다. 정장이나 스쿨룩 어디에나 매치해도 흔들림 없는 단정함은 당신의 일상에 묵직한 존재감을 더해줍니다.",
-      shopUrl: "https://www.yatomode.com/shop/?idx=78",
-    },
-    MARIA: {
-      key: "MARIA",
-      name: "MARIA",
-      title: "The Keeper",
-      tagline: "She chooses comfort without abandoning dignity.",
-      summary: "편안해도, 품위는 남는다.",
-      keywords: ["신뢰", "품위", "편안함", "교양"],
-      diagnosis:
-        "당신은 현재 소중한 것들을 지켜내기 위해 누구보다 성실히 살아온 '편안한 안정기'에 머물고 있습니다. 이제 타인의 기준이나 화려한 겉모습에 휘둘리기보다, 나만의 기준을 지키며 내면의 평온을 유지하는 데 집중합니다. 격식을 갖추면서도 편안함을 놓치지 않으려는 당신의 선택은, 자신을 소중히 여기는 가장 성숙한 형태의 자기애입니다.",
-      brandMessage:
-        "소중한 것들을 지켜내느라 고단했던 당신의 발을 깊은 믿음으로 감싸 안습니다. 견고한 신뢰와 격식 있는 편안함이 당신의 품격을 묵묵히 완성해 줄 것입니다.",
-      moment: "온전한 휴식처럼, 편안하고 품위 있는 나를 만나고 싶은 날.",
-      productDescription:
-        "둥근 기본 플랫의 안정감 위에 구조적인 디테일을 더한 MARIA는, 삶의 여러 풍파 속에서도 자신을 흐트러뜨리지 않는 당신의 단단한 내면을 닮았습니다. 과장된 화려함보다는 균형 잡힌 실루엣을 통해, 일상의 고단함을 깊은 믿음으로 감싸 안는 가장 신뢰감 있는 우아함을 제안합니다.",
-      shopUrl: "https://www.yatomode.com/shop/?idx=83",
     },
     CATIE: {
       key: "CATIE",
@@ -1021,7 +956,10 @@ import {
         </div>
 
         {/* Bottom copy + CTA */}
-        <div className="w-full flex flex-col items-center text-center">
+        <div
+          className="w-full flex flex-col items-center text-center"
+          style={{ marginBottom: "20px" }}
+        >
           <div style={fadeUp(1500)}>
             <YatoButton
               onClick={handleStart}
@@ -2035,7 +1973,7 @@ import {
                           style={{
                             fontFamily: FONT_EDITORIAL,
                             fontStyle: "italic",
-                            fontSize: "26px",
+                            fontSize: "18px",
                             letterSpacing: "0.06em",
                             color: BRAND.ink,
                             marginBottom: "8px",
