@@ -16,6 +16,7 @@ import {
   PolarRadiusAxis,
   Radar,
 } from "recharts";
+import { supabase } from "./src/lib/supabase.js";
   
   /* ============================================================================
    * YATO · Style Check-in
@@ -738,18 +739,57 @@ import {
   // Supabase save handler structure. Wire to `supabase.from('results').insert(row)`
   // in production. Schema: [name, age, answers[], final_result, second_result,
   // third_result, coupon_clicked, duration_seconds, session_id, utm..., created_at]
-  async function saveResultToSupabase(row) {
-    // TODO(supabase):
-    //   const { error } = await supabase.from('results').insert(row);
-    //   if (error) throw error;
-    if (typeof window !== "undefined") {
+  let sessionInsertPromise = null;
+
+  function ensureSessionInserted(session) {
+    if (!supabase) return Promise.resolve();
+    if (!sessionInsertPromise) {
+      sessionInsertPromise = supabase
+        .from("sessions")
+        .insert(session)
+        .then(({ error }) => {
+          if (error) {
+            // eslint-disable-next-line no-console
+            console.error("[YATO:session]", error);
+            sessionInsertPromise = null;
+          }
+        });
+    }
+    return sessionInsertPromise;
+  }
+
+  async function saveResultToSupabase(row, session) {
+    if (!supabase) {
+      if (typeof window !== "undefined") {
+        // eslint-disable-next-line no-console
+        console.log("[YATO:results.insert]", row);
+      }
+      return row;
+    }
+
+    if (session) await ensureSessionInserted(session);
+
+    const { error } = await supabase.from("results").insert(row);
+    if (error) {
       // eslint-disable-next-line no-console
-      console.log("[YATO:results.insert]", row);
+      console.error("[YATO:results.insert]", error);
     }
     return row;
   }
+
+  async function updateResultBuyClicked(sessionId) {
+    if (!supabase || !sessionId) return;
+    const { error } = await supabase
+      .from("results")
+      .update({ is_buy_clicked: true })
+      .eq("session_id", sessionId);
+    if (error) {
+      // eslint-disable-next-line no-console
+      console.error("[YATO:results.update]", error);
+    }
+  }
   
-  function TrackingProvider({ children }) {
+  function TrackingProvider({ children, sessionIdRef, sessionRef }) {
     const session = useMemo(() => {
       const sid = `sess_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`;
       return {
@@ -758,17 +798,29 @@ import {
         ...captureUtm(),
       };
     }, []);
+
+    useEffect(() => {
+      if (sessionIdRef) sessionIdRef.current = session.session_id;
+      if (sessionRef) sessionRef.current = session;
+      ensureSessionInserted(session);
+    }, [session, sessionIdRef, sessionRef]);
   
     const trackEvent = useCallback(
-      (stage, meta = {}) => {
+      async (stage, meta = {}) => {
         const payload = {
           session_id: session.session_id,
           stage,
           occurred_at: new Date().toISOString(),
           meta,
         };
-        // TODO(supabase): await supabase.from('funnel_events').insert(payload)
-        if (typeof window !== "undefined") {
+        if (supabase) {
+          await ensureSessionInserted(session);
+          const { error } = await supabase.from("funnel_events").insert(payload);
+          if (error) {
+            // eslint-disable-next-line no-console
+            console.error("[YATO:funnel]", error);
+          }
+        } else if (typeof window !== "undefined") {
           // eslint-disable-next-line no-console
           console.log("[YATO:funnel]", payload);
         }
@@ -778,15 +830,21 @@ import {
     );
   
     const trackConversion = useCallback(
-      (productId, meta = {}) => {
+      async (productId, meta = {}) => {
         const payload = {
           session_id: session.session_id,
           product_id: productId,
           occurred_at: new Date().toISOString(),
           meta: { ...meta, utm: session },
         };
-        // TODO(supabase): await supabase.from('conversions').insert(payload)
-        if (typeof window !== "undefined") {
+        if (supabase) {
+          await ensureSessionInserted(session);
+          const { error } = await supabase.from("conversions").insert(payload);
+          if (error) {
+            // eslint-disable-next-line no-console
+            console.error("[YATO:conversion]", error);
+          }
+        } else if (typeof window !== "undefined") {
           // eslint-disable-next-line no-console
           console.log("[YATO:conversion]", payload);
         }
@@ -794,12 +852,6 @@ import {
       },
       [session]
     );
-  
-    useEffect(() => {
-      // TODO(supabase): await supabase.from('sessions').insert(session)
-      // eslint-disable-next-line no-console
-      console.log("[YATO:session]", session);
-    }, [session]);
   
     const value = useMemo(
       () => ({ session, trackEvent, trackConversion }),
@@ -2304,6 +2356,8 @@ import {
     const startedAtRef = useRef(null);
     const rippleRef = useRef(null);
     const savedRef = useRef(false);
+    const sessionIdRef = useRef(null);
+    const sessionRef = useRef(null);
   
     // Coupon code is always tied to the CURRENTLY viewed character
     const couponCode = selectedKey ? buildCouponCode(selectedKey) : "YATO-OWN-05";
@@ -2367,6 +2421,7 @@ import {
         ? Math.round((Date.now() - startedAtRef.current) / 1000)
         : null;
       const row = {
+        session_id: sessionIdRef.current,
         name: respondent.name,
         age: respondent.age,
         answers: Object.entries(answers || {}).map(([qid, opt]) => ({
@@ -2384,7 +2439,7 @@ import {
         scores: result.scores,
         created_at: new Date().toISOString(),
       };
-      saveResultToSupabase(row);
+      saveResultToSupabase(row, sessionRef.current);
     }, [phase, result, respondent, answers, couponClicked, isBuyClicked]);
   
     // Full reset — returns to landing and wipes all state
@@ -2407,7 +2462,7 @@ import {
     // Track purchase intent for Supabase
     const handleBuyClicked = (charKey) => {
       setIsBuyClicked(true);
-      // TODO(supabase): update results set is_buy_clicked = true where session = :sid
+      updateResultBuyClicked(sessionIdRef.current);
       // Character-aware purchase event
       if (typeof window !== "undefined") {
         window.dispatchEvent(
@@ -2469,7 +2524,7 @@ import {
     };
   
     return (
-      <TrackingProvider>
+      <TrackingProvider sessionIdRef={sessionIdRef} sessionRef={sessionRef}>
         <div
           className="relative w-full overflow-hidden"
           style={{
@@ -2728,6 +2783,15 @@ import {
   /* ============================================================================
    * Supabase schema reference
    * ----------------------------------------------------------------------------
+   *   create table sessions (
+   *     id uuid primary key default gen_random_uuid(),
+   *     session_id text unique not null,
+   *     started_at timestamptz not null,
+   *     utm_source text, utm_medium text, utm_campaign text, utm_content text,
+   *     referrer text, landing_path text, user_agent text,
+   *     created_at timestamptz default now()
+   *   );
+   *
    *   create table results (
    *     id uuid primary key default gen_random_uuid(),
    *     session_id text,
