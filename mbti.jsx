@@ -45,6 +45,8 @@ import {
   // Imweb header overlap offset (landing/test embedded in Imweb page)
   // Keep content starting comfortably below the Imweb header across viewports.
   const IMWEB_TOP_PADDING = "clamp(40px, 6vh, 60px)";
+  const LANDING_VIEWPORT_HEIGHT = `calc(100dvh - ${IMWEB_TOP_PADDING})`;
+  const PRIMARY_CTA_WRAPPER_CLASS = "flex justify-center pt-4 mt-[120px]";
 
   // Parisian editorial system (text + hairlines). Keep background/buttons unchanged.
   const PARIS = {
@@ -219,7 +221,7 @@ import {
     VALENTINE: "Valetine_BK_F_WG.jpg",
     SIENA: "SIENA_WH_F_WG.png",
     ARIN: "ARIN_BK_F_WG.jpg",
-    SYLVIE: "Sylvie_LE_F_WG.jpg",
+    SYLVIE: "Sylvie_PK_F_WG.jpg",
     SOFIE: "SOFIE_GR_F_WG.png",
     JULIET: "JULLI_BK_F_WG.jpg",
     BALLERINA: "ballerina_BK_F_WG.jpg",
@@ -908,16 +910,18 @@ import {
   
     return (
       <main
-        className="relative z-10 px-6 max-w-xl mx-auto flex flex-col items-center"
+        className="relative z-10 max-w-xl mx-auto px-6 flex flex-col items-center justify-center"
         style={{
-          minHeight: "100vh",
-          paddingTop: 0,
-          paddingBottom: "68px",
+          boxSizing: "border-box",
+          height: LANDING_VIEWPORT_HEIGHT,
+          minHeight: 0,
+          paddingTop: "24px",
+          paddingBottom: "48px",
+          overflow: "hidden",
         }}
       >
-        {/* Center copy */}
-        <div className="flex-1 w-full flex items-center justify-center">
-          <div className="w-full flex flex-col items-center text-center">
+        <div className="w-full flex flex-col items-center text-center gap-9">
+          <div>
             <div style={{ color: BRAND.ink, marginBottom: "8px" }}>
               <div
                 style={{
@@ -950,17 +954,11 @@ import {
                 marginBottom: 0,
               }}
             >
-            지금의 나와 가장 닮은 실루엣을 찾아보세요.
+              지금의 나와 가장 닮은 실루엣을 찾아보세요.
             </h1>
           </div>
-        </div>
 
-        {/* Bottom copy + CTA */}
-        <div
-          className="w-full flex flex-col items-center text-center"
-          style={{ marginBottom: "20px" }}
-        >
-          <div style={fadeUp(1500)}>
+          <div className={PRIMARY_CTA_WRAPPER_CLASS} style={fadeUp(1500)}>
             <YatoButton
               onClick={handleStart}
               ariaLabel="나다움을 찾는 여정 시작하기"
@@ -1076,7 +1074,7 @@ import {
             />
           </div>
   
-          <div className="flex justify-center pt-4 mt-[120px]" style={fadeUp(340)}>
+          <div className={PRIMARY_CTA_WRAPPER_CLASS} style={fadeUp(340)}>
             <YatoButton
               type="submit"
               disabled={!canSubmit}
@@ -2482,7 +2480,7 @@ import {
     return (
       <TrackingProvider>
         <div
-          className="relative min-h-screen w-full overflow-hidden"
+          className="relative w-full overflow-hidden"
           style={{
             background:
               // From survey onward, keep the same intro image background.
@@ -2490,6 +2488,9 @@ import {
             fontFamily: FONT_SANS,
             color: BRAND.ink,
             paddingTop: IMWEB_TOP_PADDING,
+            boxSizing: "border-box",
+            height: phase === "landing" ? "100dvh" : undefined,
+            minHeight: phase === "landing" ? undefined : "100vh",
           }}
         >
           {phase !== "landing" && <SandRipple ref={rippleRef} />}
@@ -2539,6 +2540,16 @@ import {
             html, body, #root { background-color: ${
               phase === "landing" ? "transparent" : BRAND.ivory
             }; }
+            ${
+              phase === "landing"
+                ? `
+            html, body, #root {
+              overflow: hidden;
+              height: 100dvh;
+              overscroll-behavior: none;
+            }`
+                : ""
+            }
 
             /* Survey navigation buttons (PREV / NEXT) */
             .yato-nav-btn {
