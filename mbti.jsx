@@ -905,8 +905,8 @@ import {
           className="absolute"
           style={{
             position: "absolute",
-            left: "81px",
-            top: "461px",
+            left: "calc(50% - 170px)",
+            top: "511px",
             ...fadeUp(1500),
           }}
         >
