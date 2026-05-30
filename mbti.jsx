@@ -888,7 +888,7 @@ import {
   
     return (
       <main
-        className="relative z-10 max-w-xl mx-auto px-6 flex flex-col items-center justify-center"
+        className="yato-landing-hero relative z-10 max-w-xl mx-auto px-6 flex flex-col items-center justify-center"
         style={{
           boxSizing: "border-box",
           height: LANDING_VIEWPORT_HEIGHT,
@@ -912,10 +912,14 @@ import {
         >
           <span>나다움을 찾는 여정 시작하기</span>
         </YatoButton>
-        <div className="w-full flex flex-col items-center text-center gap-9">
-          <div>
-            <div style={{ color: BRAND.ink, marginBottom: "8px" }}>
+        <div className="yato-landing-content w-full flex flex-col items-center text-center gap-9">
+          <div className="w-full flex flex-col items-center">
+            <div
+              className="w-full"
+              style={{ color: BRAND.ink, marginBottom: "8px" }}
+            >
               <div
+                className="yato-landing-headline"
                 style={{
                   fontFamily: "'Jost', system-ui, sans-serif",
                   fontStyle: "normal",
@@ -934,6 +938,7 @@ import {
             </div>
 
             <h1
+              className="yato-landing-subtitle"
               style={{
                 fontFamily: FONT_SANS,
                 fontSize: "18px",
@@ -941,6 +946,7 @@ import {
                 color: PARIS.mute,
                 letterSpacing: "0.02em",
                 lineHeight: 1.6,
+                textAlign: "center",
                 ...fadeUp(900),
                 marginTop: 0,
                 marginBottom: 0,
@@ -2531,6 +2537,32 @@ import {
               overscroll-behavior: none;
             }`
                 : ""
+            }
+
+            @media (max-width: 640px) {
+              .yato-landing-hero {
+                justify-content: center;
+                align-items: center;
+              }
+              .yato-landing-content {
+                width: 100%;
+                max-width: 100%;
+                margin-left: auto;
+                margin-right: auto;
+                align-items: center;
+                text-align: center;
+              }
+              .yato-landing-headline {
+                white-space: normal;
+                font-size: clamp(26px, 7.2vw, 36px) !important;
+                max-width: 100%;
+                line-height: 1.25;
+              }
+              .yato-landing-subtitle {
+                max-width: 100%;
+                font-size: 16px;
+                padding: 0 4px;
+              }
             }
 
             /* Survey navigation buttons (PREV / NEXT) */
