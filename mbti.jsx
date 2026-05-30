@@ -46,7 +46,7 @@ import {
   // Keep content starting comfortably below the Imweb header across viewports.
   const IMWEB_TOP_PADDING = "clamp(40px, 6vh, 60px)";
   const LANDING_VIEWPORT_HEIGHT = `calc(100dvh - ${IMWEB_TOP_PADDING})`;
-  const PRIMARY_CTA_WRAPPER_CLASS = "flex justify-center pt-4 mt-[120px]";
+  const PRIMARY_CTA_WRAPPER_CLASS = "flex justify-center pt-4 mt-[170px]";
 
   // Parisian editorial system (text + hairlines). Keep background/buttons unchanged.
   const PARIS = {
@@ -67,7 +67,7 @@ import {
     disabled = false,
     onClick,
     ariaLabel,
-    className = "",
+    className = "relative",
     style,
     size = "md", // md | sm
     variant = "pill", // pill | outline
@@ -117,7 +117,7 @@ import {
         onFocus={() => !disabled && setHovered(true)}
         onBlur={() => setHovered(false)}
         aria-label={ariaLabel}
-        className={`yato-cta relative inline-flex items-center ${
+        className={`yato-cta inline-flex items-center ${
           splitArrow ? "justify-between" : "justify-center"
         } select-none overflow-hidden ${className}`}
         style={{
@@ -174,7 +174,6 @@ import {
   // 1. Character data (result.csv)
   // ---------------------------------------------------------------------------
   const CHARACTER_KEYS = [
-    "LENA",
     "VALENTINE",
     "SIENA",
     "ARIN",
@@ -194,13 +193,11 @@ import {
     SIENA: 0.07,
     JULIET: 0.05,
     CATIE: 0.02,
-    LENA: 0.01,
     BALLERINA: 0.0,
   };
   
   // Character-linked coupon short codes (YATO-[CODE]-05)
   const COUPON_SHORT = {
-    LENA: "LEN",
     VALENTINE: "VAL",
     SIENA: "SIE",
     ARIN: "ARI",
@@ -216,8 +213,6 @@ import {
   // Character images (from /public/images) for "Recommended Shoes"
   // NOTE: Some filenames intentionally keep existing typos/casing in the folder.
   const CHARACTER_RECOMMENDED_IMAGE = {
-    // LENA: (no matching asset currently found in public/images)
-    LENA: null,
     VALENTINE: "Valetine_BK_F_WG.jpg",
     SIENA: "SIENA_WH_F_WG.png",
     ARIN: "ARIN_BK_F_WG.jpg",
@@ -241,7 +236,6 @@ import {
   ];
 
   const SILHOUETTE_PROFILE_SCORES = {
-    LENA: [5, 4, 2, 1, 2, 3],
     VALENTINE: [4, 5, 3, 2, 3, 2],
     SIENA: [4, 2, 5, 3, 4, 1],
     ARIN: [2, 3, 4, 5, 3, 2],
@@ -282,22 +276,6 @@ import {
   };
   
   const CHARACTERS = {
-    LENA: {
-      key: "LENA",
-      name: "LENA",
-      title: "The Muse",
-      tagline: "She attracts without asking. Defined by line, not noise.",
-      summary: "조용해도, 시선은 머문다.",
-      keywords: ["매혹", "선명함", "시선", "자신감"],
-      diagnosis:
-        "당신은 지금 자신을 숨기지 않고 세상 앞에 당당히 드러내는 단계에 있습니다. 타인의 시선을 피하기보다 오히려 그 시선을 즐길 줄 아는 여유가 생겼으며, 과하지 않지만 분명한 선을 선택함으로써 자신의 매력을 선명하게 확장해 나가고 있습니다.",
-      brandMessage:
-        "당신이 걷는 길은 곧 런웨이가 됩니다. Lena는 당신의 내면에 숨겨진 매혹적인 아우라를 가장 선명하고 엣지 있게 끌어올려 줄 것입니다.",
-      moment: "특별한 날, 특별한 아이템으로.",
-      productDescription:
-        "얇고 우아한 스트랩 디테일의 LENA는 하이힐이 가진 특유의 긴장감과 엣지를 플랫슈즈의 형태로 구현했습니다. 단순히 발을 감싸는 것을 넘어, 발등 위의 선 하나로 전체적인 무드를 장악하는 이 슈즈는 특별한 날, 당신을 더욱 돋보이게 만드는 특별한 아이템이 됩니다.",
-      shopUrl: "https://www.yatomode.com/shop/?idx=29",
-    },
     VALENTINE: {
       key: "VALENTINE",
       name: "VALENTINE",
@@ -451,8 +429,8 @@ import {
           weights: { BALLERINA: 1, ARIN: 2, SYLVIE: 1 },
         },
         {
-          text: "큰 변화는 없지만, 내면에서 무언가 달라지고 싶은 시기",
-          weights: { SYLVIE: 2, VALENTINE: 2, JULIET: 1, LENA: 1 },
+          text: "큰 변화는 없지만, 무언가 달라지고 싶은 시기",
+          weights: { SYLVIE: 2, VALENTINE: 2, JULIET: 1 },
         },
         {
           text: "가족을 위한 긴 여정을 지나, 비로소 나를 마주하기 시작한 시기",
@@ -466,7 +444,7 @@ import {
       options: [
         {
           text: "새로운 나를 발견하고 존재감을 드러내는 나",
-          weights: { LENA: 1, VALENTINE: 2 },
+          weights: { VALENTINE: 2 },
         },
         {
           text: "타인에게 신뢰와 단단함을 주는 나",
@@ -492,7 +470,7 @@ import {
       options: [
         {
           text: "나만의 안목으로 망설임 없이 선택한다",
-          weights: { CATIE: 1, LENA: 1, RINA: 1 },
+          weights: { CATIE: 1, RINA: 1 },
         },
         {
           text: "아직은 나만의 색깔을 정의하기보다, 정답을 찾아가는 중이다.",
@@ -504,7 +482,7 @@ import {
         },
         {
           text: "내가 좋아하는 것을 선명하게 알고 더 확장하고 싶다",
-          weights: { LENA: 1, VALENTINE: 1 },
+          weights: { VALENTINE: 1 },
         },
       ],
     },
@@ -514,7 +492,7 @@ import {
       options: [
         {
           text: "나의 개성과 유니크한 캐릭터를 표현해주는가",
-          weights: { SYLVIE: 2, LENA: 2, VALENTINE: 1 },
+          weights: { SYLVIE: 2, VALENTINE: 1 },
           catie: -1,
         },
         {
@@ -550,7 +528,7 @@ import {
         },
         {
           text: "선이 또렷하고 현대적인 세련된 공간",
-          weights: { VALENTINE: 2, LENA: 1, SIENA: 2 },
+          weights: { VALENTINE: 2, SIENA: 2 },
           catie: -1,
         },
         {
@@ -573,7 +551,7 @@ import {
       options: [
         {
           text: "몸의 선이 드러나는 엣지 있는 룩",
-          weights: { LENA: 1, VALENTINE: 1, SIENA: 1 },
+          weights: { VALENTINE: 1, SIENA: 1 },
           catie: -1,
         },
         {
@@ -635,7 +613,7 @@ import {
         },
         {
           text: "말하지 않아도 느껴지는 강한 카리스마",
-          weights: { RINA: 1, SIENA: 2, LENA: 1 },
+          weights: { RINA: 1, SIENA: 2 },
           catie: -1,
         },
       ],
@@ -658,7 +636,7 @@ import {
         },
         {
           text: "또렷하게 각인되는, 존재감이 확실한 사람",
-          weights: { LENA: 2, VALENTINE: 1, SIENA: 1 },
+          weights: { VALENTINE: 1, SIENA: 1 },
           catie: -1,
         },
       ],
@@ -669,7 +647,7 @@ import {
       options: [
         {
           text: "\"당신은 선명한 이미지를 가질 자격이 있어요\"",
-          weights: { VALENTINE: 2, LENA: 2 },
+          weights: { VALENTINE: 2 },
           catie: -1,
         },
         {
@@ -920,6 +898,20 @@ import {
           overflow: "hidden",
         }}
       >
+        <YatoButton
+          onClick={handleStart}
+          ariaLabel="나다움을 찾는 여정 시작하기"
+          showArrow
+          className="absolute"
+          style={{
+            position: "absolute",
+            left: "81px",
+            top: "461px",
+            ...fadeUp(1500),
+          }}
+        >
+          <span>나다움을 찾는 여정 시작하기</span>
+        </YatoButton>
         <div className="w-full flex flex-col items-center text-center gap-9">
           <div>
             <div style={{ color: BRAND.ink, marginBottom: "8px" }}>
@@ -956,16 +948,6 @@ import {
             >
               지금의 나와 가장 닮은 실루엣을 찾아보세요.
             </h1>
-          </div>
-
-          <div className={PRIMARY_CTA_WRAPPER_CLASS} style={fadeUp(1500)}>
-            <YatoButton
-              onClick={handleStart}
-              ariaLabel="나다움을 찾는 여정 시작하기"
-              showArrow
-            >
-              <span>나다움을 찾는 여정 시작하기</span>
-            </YatoButton>
           </div>
         </div>
       </main>
