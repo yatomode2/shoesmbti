@@ -2623,7 +2623,7 @@ import {
             /* Q5 image choices (hover reveal label) */
             .yato-img-choice {
               border-radius: 2px;
-              border: 1px solid rgba(43, 42, 38, 0.12);
+              border: 0.7px solid rgba(43, 42, 38, 0.12);
               background: rgba(255, 255, 255, 0.35);
               cursor: pointer;
               padding: 0;
@@ -2631,7 +2631,7 @@ import {
             }
             .yato-img-choice:hover {
               transform: translateY(-1px);
-              border-color: rgba(43, 42, 38, 0.18);
+              border-color: rgba(0, 0, 0, 1);
             }
             .yato-img-choice.is-selected {
               border-color: rgba(43, 42, 38, 0.28);
