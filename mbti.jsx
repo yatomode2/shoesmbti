@@ -912,7 +912,10 @@ import {
         >
           <span>나다움을 찾는 여정 시작하기</span>
         </YatoButton>
-        <div className="yato-landing-content w-full flex flex-col items-center text-center gap-9">
+        <div
+          className="yato-landing-content w-full flex flex-col items-center text-center gap-9"
+          style={{ marginTop: "-200px" }}
+        >
           <div className="w-full flex flex-col items-center">
             <div
               className="w-full"
